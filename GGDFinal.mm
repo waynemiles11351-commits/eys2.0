@@ -617,10 +617,27 @@ static UIColor *colorForRole(NSString *role) {
 } return self; }
 
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
-    if (CGRectContainsPoint(_toggle.frame, point)) return YES;
-    if (!_panel.hidden && CGRectContainsPoint(_panel.frame, point)) return YES;
+    CGRect toggleFrame = _toggle.frame;
+    if (point.x >= toggleFrame.origin.x &&
+        point.x <= toggleFrame.origin.x + toggleFrame.size.width &&
+        point.y >= toggleFrame.origin.y &&
+        point.y <= toggleFrame.origin.y + toggleFrame.size.height) {
+        return YES;
+    }
+
+    if (!_panel.hidden) {
+        CGRect panelFrame = _panel.frame;
+        if (point.x >= panelFrame.origin.x &&
+            point.x <= panelFrame.origin.x + panelFrame.size.width &&
+            point.y >= panelFrame.origin.y &&
+            point.y <= panelFrame.origin.y + panelFrame.size.height) {
+            return YES;
+        }
+    }
+
     return NO;
 }
+
 - (void)togglePanel { _panel.hidden=!_panel.hidden; }
 - (void)startScan { [[GGDRuntime shared] probe]; [_scan setTitle:@"读取中" forState:UIControlStateNormal]; }
 - (void)move:(UIPanGestureRecognizer*)g { CGPoint d=[g translationInView:self]; CGRect r=_toggle.frame; r.origin.x=MAX(0,MIN(self.bounds.size.width-r.size.width,r.origin.x+d.x)); r.origin.y=MAX(40,MIN(self.bounds.size.height-r.size.height,r.origin.y+d.y)); _toggle.frame=r; _panel.frame=CGRectMake(r.origin.x,r.origin.y+r.size.height+8,_panel.frame.size.width,_panel.frame.size.height); [g setTranslation:CGPointMake(0,0) inView:self]; }
