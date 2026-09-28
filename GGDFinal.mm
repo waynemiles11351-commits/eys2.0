@@ -503,7 +503,7 @@ static UIColor *colorForRole(NSString *role) {
         if (ty == IL2CPP_TYPE_SZARRAY || (tn && (ciContains(tn,"List") || ciContains(tn,"Player")))) {
             _ownerClass=c; _playersField=f;
             const char *cn=_api.class_get_name(c); const char *fn=_api.field_get_name(f);
-            _ownerText=[NSString stringWithFormat:@"%s.%s", cn?cn:@"?", fn?fn:@"?"];
+            _ownerText=[NSString stringWithFormat:@"%s.%s", cn ? cn : "?", fn ? fn : "?"];
             _status=[NSString stringWithFormat:@"玩家集合已定位：%@", _ownerText];
             return;
         }
@@ -530,7 +530,7 @@ static UIColor *colorForRole(NSString *role) {
             if (!(ty==IL2CPP_TYPE_SZARRAY || (tn && (ciContains(tn,"List") || ciContains(tn,"Player"))))) continue;
             _ownerClass=c; _playersField=f;
             const char *fn=_api.field_get_name(f);
-            _ownerText=[NSString stringWithFormat:@"%s.%s",cn?cn:@"?",fn?fn:@"?"];
+            _ownerText=[NSString stringWithFormat:@"%s.%s", cn ? cn : "?", fn ? fn : "?"];
             _status=[NSString stringWithFormat:@"玩家集合已定位：%@",_ownerText];
             return;
         }
